@@ -93,7 +93,7 @@ void host_task(void *param)
 }
 
 void ble_init(){
-    nvs_flash_init();                          // 1 - Initialize NVS flash using
+    
     esp_nimble_hci_init();                     // 2 - Initialize ESP controller
     nimble_port_init();                        // 3 - Initialize the host stack
     ble_svc_gap_device_name_set(TAG); // 4 - Initialize NimBLE configuration - server name
