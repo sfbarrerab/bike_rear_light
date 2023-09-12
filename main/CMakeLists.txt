@@ -1,2 +1,2 @@
-idf_component_register(SRCS "bike_rear_light.c"
+idf_component_register(SRCS "main.c" "bluetooth.c"
                     INCLUDE_DIRS ".")

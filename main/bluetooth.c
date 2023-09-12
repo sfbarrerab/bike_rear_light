@@ -1,17 +1,5 @@
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/event_groups.h"
-#include "esp_event.h"
-#include "nvs_flash.h"
-#include "esp_log.h"
-#include "esp_nimble_hci.h"
-#include "nimble/nimble_port.h"
-#include "nimble/nimble_port_freertos.h"
-#include "host/ble_hs.h"
-#include "services/gap/ble_svc_gap.h"
-#include "services/gatt/ble_svc_gatt.h"
-#include "sdkconfig.h"
+#include "bluetooth.h"
+
 
 char *TAG = "Bike light";
 uint8_t ble_addr_type;
@@ -104,8 +92,7 @@ void host_task(void *param)
     nimble_port_run(); // This function will return only when nimble_port_stop() is executed
 }
 
-void app_main()
-{
+void ble_init(){
     nvs_flash_init();                          // 1 - Initialize NVS flash using
     esp_nimble_hci_init();                     // 2 - Initialize ESP controller
     nimble_port_init();                        // 3 - Initialize the host stack
@@ -115,5 +102,4 @@ void app_main()
     ble_gatts_count_cfg(gatt_svcs);            // 4 - Initialize NimBLE configuration - config gatt services
     ble_gatts_add_svcs(gatt_svcs);             // 4 - Initialize NimBLE configuration - queues gatt services.
     ble_hs_cfg.sync_cb = ble_app_on_sync;      // 5 - Initialize application
-    nimble_port_freertos_init(host_task);      // 6 - Run the thread
 }
