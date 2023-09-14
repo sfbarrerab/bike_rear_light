@@ -1,7 +1,7 @@
 #include "nvs_wr.h"
 
 
-int64_t design_one;
+uint64_t design_one;
 
 void nvs_init(){
     // Initialize NVS
@@ -15,7 +15,7 @@ void nvs_init(){
     ESP_ERROR_CHECK( nvs_err );
 }
 
-void nvs_write(int64_t data){
+void nvs_write(uint64_t data){
     nvs_handle_t nvs_handle;
     esp_err_t nvs_err;
 
@@ -25,7 +25,7 @@ void nvs_write(int64_t data){
     } else {
         // Write
         printf("Writing in NVS ... ");
-        nvs_err = nvs_set_i64(nvs_handle, "Design1", data);
+        nvs_err = nvs_set_u64(nvs_handle, "Design1", data);
         printf((nvs_err != ESP_OK) ? "Failed!\n" : "Done\n");
 
         // Commit written value.
@@ -56,7 +56,7 @@ void nvs_read(){
         // Read
         printf("Reading default design one from NVS ... ");
         //int64_t design_one = 0; // value will default to 0, if not set yet in NVS
-        nvs_err = nvs_get_i64(nvs_handle, "Design1", &design_one);
+        nvs_err = nvs_get_u64(nvs_handle, "Design1", &design_one);
         switch (nvs_err) {
             case ESP_OK:
                 printf("Done\n");
