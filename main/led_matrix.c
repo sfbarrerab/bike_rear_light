@@ -17,8 +17,8 @@ void init_matrix_led_spi(){
 
     spi_device_interface_config_t devcfg = {
         .clock_speed_hz = 1000000, // Clock out at 1 MHz with 1 us cycle
-        .mode = 1,                 // SPI mode 1 - clk starts with a low signal and falling edge reading
-        .spics_io_num = PIN_NUM_CS,        // CS pin         //.cs_ena_posttrans = 0,
+        .mode = 0,                 // data is sampled on the rising edge of the clock pulse and shifted out on the falling edge of the clock pulse.
+        .spics_io_num = PIN_NUM_CS,     
         .flags = SPI_DEVICE_HALFDUPLEX,
         .queue_size = 1,
         .pre_cb = NULL,

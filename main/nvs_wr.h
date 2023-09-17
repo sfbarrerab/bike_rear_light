@@ -2,6 +2,7 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 #include <stdio.h>
+#include <stdint.h>
 #include <inttypes.h>
 
 #define DEFAULT_DESIGN_ONE 0x423C7EDBFF66A581ULL

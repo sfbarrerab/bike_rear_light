@@ -7,6 +7,7 @@
 #include "services/gatt/ble_svc_gatt.h"
 #include "sdkconfig.h"
 #include "nvs_flash.h"
+#include <stdint.h>
 
 void ble_init();
 void host_task(void *param);

@@ -1,11 +1,12 @@
 #pragma once
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
+#include <stdint.h>
 
+#define PIN_NUM_CLK 8
 #define PIN_NUM_MISO 9
 #define PIN_NUM_MOSI 10
-#define PIN_NUM_CLK 8
-#define PIN_NUM_CS 7
+#define PIN_NUM_CS 20
 
 
 #define DECODE_MOD_ADDR 0X9
