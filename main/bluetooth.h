@@ -9,5 +9,7 @@
 #include "nvs_flash.h"
 #include <stdint.h>
 
+extern uint8_t led_design_int_bffr[8];
+
 void ble_init();
 void host_task(void *param);

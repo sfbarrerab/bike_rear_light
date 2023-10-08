@@ -3,12 +3,38 @@
 
 char *TAG = "Bike light";
 uint8_t ble_addr_type;
+int led_design_bffr_index = 0;
+uint8_t led_design_int_bffr[8];
+
 void ble_app_advertise(void);
+
+// Function to join the multiple strings
 
 // Write data to ESP32 defined as server
 static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
+    char output_string[100];
+    int output_index = 0;
+    
     printf("Data from the client: %.*s\n", ctxt->om->om_len, ctxt->om->om_data);
+
+    for (int i = 0; i < ctxt->om->om_len; i++) {
+        if (ctxt->om->om_data[i] != ',') {
+            output_string[output_index] = ctxt->om->om_data[i];
+            output_index++;
+        }
+    }
+    output_string[output_index] = '\0'; // Null-terminate the result
+
+    // convert the value to binary and store it in the output bffr
+    led_design_int_bffr[led_design_bffr_index] = strtoul(output_string, NULL, 2); 
+
+    // print
+    printf("Data after conversion is: %d\n", led_design_int_bffr[led_design_bffr_index]);
+
+    // Increment the bffr size
+    led_design_bffr_index = (led_design_bffr_index + 1) % 8;
+
     return 0;
 }
 
