@@ -8,7 +8,16 @@ uint8_t led_design_int_bffr[8];
 
 void ble_app_advertise(void);
 
-// Function to join the multiple strings
+// Function to transform the array into a single 64 bit varaible
+uint64_t uint8_array_to_uint64(const uint8_t uint8_array[8]) {
+    uint64_t result = 0;
+    
+    for (int i = 0; i < 8; i++) {
+        result |= (uint64_t)uint8_array[i] << (8 * (7 - i));
+    }
+    
+    return result;
+}
 
 // Write data to ESP32 defined as server
 static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
@@ -29,11 +38,13 @@ static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_g
     // convert the value to binary and store it in the output bffr
     led_design_int_bffr[led_design_bffr_index] = strtoul(output_string, NULL, 2); 
 
-    // print
-    printf("Data after conversion is: %d\n", led_design_int_bffr[led_design_bffr_index]);
-
     // Increment the bffr size
-    led_design_bffr_index = (led_design_bffr_index + 1) % 8;
+    led_design_bffr_index += 1;
+
+    if(led_design_bffr_index == 8){
+        designs_dic[0].value = uint8_array_to_uint64(led_design_int_bffr);
+        led_design_bffr_index = 0;
+    }
 
     return 0;
 }

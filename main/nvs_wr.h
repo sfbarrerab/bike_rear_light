@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#define DEFAULT_DESIGN_ONE 0x423C7EDBFF66A581ULL
-
 extern uint64_t design_one;
 
 void nvs_init();

@@ -8,7 +8,7 @@
 #include "bluetooth.h"
 #include "nvs_wr.h"
 #include "led_matrix.h"
-
+#include "design_storage.h"
 
 void app_main()
 {
@@ -17,6 +17,9 @@ void app_main()
 
     // Init ble procceses
     ble_init();
+
+    // Init the designs structure
+    init_designs_dic();
 
     // Init SPI for led matrix device
     init_matrix_led_spi();
@@ -31,11 +34,15 @@ void app_main()
 
     // Write on NVS
     //nvs_write(DEFAULT_DESIGN_ONE);
-    nvs_write(uint8_array_to_uint64(led_design_int_bffr));
+    nvs_write(designs_dic[0].value);
 
     // Read the written value in NVS
     nvs_read();
 
+    // Create the task to display the dictioanry designs
+    xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, 1, 1, NULL, 1);
+
+
     // Print the design on the matrix led
-    draw_led_matrix(design_one);
+    //draw_led_matrix(design_one);
 }

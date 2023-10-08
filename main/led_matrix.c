@@ -85,5 +85,11 @@ void draw_led_matrix(uint64_t data){
         spi_write(i+1,num8_array[i]);
     }
 
+}
 
+void display_designs_task(){
+    while(1){
+        draw_led_matrix(designs_dic[0].value);
+        vTaskDelay(5000/portTICK_PERIOD_MS);
+    }
 }

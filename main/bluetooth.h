@@ -8,6 +8,7 @@
 #include "sdkconfig.h"
 #include "nvs_flash.h"
 #include <stdint.h>
+#include "design_storage.h"
 
 extern uint8_t led_design_int_bffr[8];
 
