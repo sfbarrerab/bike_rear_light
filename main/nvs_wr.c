@@ -1,8 +1,5 @@
 #include "nvs_wr.h"
 
-
-uint64_t design_one;
-
 void nvs_init(){
     // Initialize NVS
     esp_err_t nvs_err = nvs_flash_init();
@@ -15,7 +12,7 @@ void nvs_init(){
     ESP_ERROR_CHECK( nvs_err );
 }
 
-void nvs_write(uint64_t data){
+void nvs_write(char* design_name, uint64_t data){
     nvs_handle_t nvs_handle;
     esp_err_t nvs_err;
 
@@ -24,8 +21,9 @@ void nvs_write(uint64_t data){
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(nvs_err));
     } else {
         // Write
-        printf("Writing in NVS ... ");
-        nvs_err = nvs_set_u64(nvs_handle, "Design1", data);
+        printf("Writing in NVS ");
+        printf("%s...",design_name);
+        nvs_err = nvs_set_u64(nvs_handle, design_name, data);
         printf((nvs_err != ESP_OK) ? "Failed!\n" : "Done\n");
 
         // Commit written value.
@@ -42,10 +40,12 @@ void nvs_write(uint64_t data){
 
 }
 
-void nvs_read(){
+uint64_t nvs_read(char* design_name){
 
     nvs_handle_t nvs_handle;
     esp_err_t nvs_err;
+
+    uint64_t design_value;
 
     nvs_err = nvs_open("storage", NVS_READWRITE, &nvs_handle);
     if (nvs_err != ESP_OK) {
@@ -54,13 +54,14 @@ void nvs_read(){
         printf("Done\n");
 
         // Read
-        printf("Reading default design one from NVS ... ");
+        printf("%s:\n",design_name);
+        printf("Reading from NVS ... ");
         //int64_t design_one = 0; // value will default to 0, if not set yet in NVS
-        nvs_err = nvs_get_u64(nvs_handle, "Design1", &design_one);
+        nvs_err = nvs_get_u64(nvs_handle, design_name, &design_value);
         switch (nvs_err) {
             case ESP_OK:
                 printf("Done\n");
-                printf("The data in the NVS is: %" PRIu64 "\n", design_one);
+                printf("The data in the NVS is: %" PRIu64 "\n", design_value);
                 break;
             case ESP_ERR_NVS_NOT_FOUND:
                 printf("The value is not initialized yet!\n");
@@ -73,4 +74,6 @@ void nvs_read(){
 
     // Close
     nvs_close(nvs_handle);
+
+    return design_value;
 }

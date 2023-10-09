@@ -1,7 +1,12 @@
 #pragma once
 #include <stdint.h>
+#include <string.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/event_groups.h"
+#include "nvs_wr.h"
 
-#define NUMBER_OF_DESIGNS 5
+#define NUMBER_OF_DESIGNS 6
 
 // all the designs are transposed to match let the C port in the left side
 #define DEFAULT_DESIGN_ONE 0x1BBC6E78786EBC1BULL
@@ -13,10 +18,12 @@
 
 // Define a struct to hold the key-value pair
 typedef struct designs_dic_t{
-    int key;
+    char key[20];
     uint64_t value;
 }designs_dic_t;
 
-extern designs_dic_t designs_dic[NUMBER_OF_DESIGNS];
+extern designs_dic_t prev_designs_dic[NUMBER_OF_DESIGNS];
+extern designs_dic_t current_designs_dic[NUMBER_OF_DESIGNS];
 
 void init_designs_dic();
+void store_new_designs();

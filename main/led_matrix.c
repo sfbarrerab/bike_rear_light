@@ -33,8 +33,6 @@ void init_matrix_led_spi(){
     // Add the device to the SPI handler
     ret = spi_bus_add_device(SPI2_HOST, &devcfg, &led_matrix_spi_hndl);
     ESP_ERROR_CHECK(ret);
-    
-    // Set to no decode mode 
 }
 
 // Function to transform NVS data for transmiting  in the SPI line
@@ -90,8 +88,9 @@ void draw_led_matrix(uint64_t data){
 void display_designs_task(){
     int i = 0;
     while(1){
-        draw_led_matrix(designs_dic[i].value);
-        i = (i+1)%(NUMBER_OF_DESIGNS+1);
+        
+        draw_led_matrix(current_designs_dic[i].value);
+        i = (i+1)%NUMBER_OF_DESIGNS;
         vTaskDelay(5000/portTICK_PERIOD_MS);
     }
 }

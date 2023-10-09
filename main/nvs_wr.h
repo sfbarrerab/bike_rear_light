@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-extern uint64_t design_one;
-
 void nvs_init();
-void nvs_write(uint64_t data);
-void nvs_read();
+void nvs_write(char* design_name, uint64_t data);
+uint64_t nvs_read(char* design_name);

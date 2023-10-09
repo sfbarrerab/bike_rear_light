@@ -18,7 +18,7 @@ void app_main()
     // Init ble procceses
     ble_init();
 
-    // Init the designs structure
+    // Init the designs structure and store them in NVS
     init_designs_dic();
 
     // Init SPI for led matrix device
@@ -28,21 +28,11 @@ void app_main()
     init_led_driver();
     
     // Run the ble thread
-    nimble_port_freertos_init(host_task);   
+    nimble_port_freertos_init(host_task);     
 
-    // Convert the uint8_t array into a uint64_t
+    // Task to display the dictionary designs
+    xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, NULL, 1, NULL, 1);
+    // Task to store the values when changed
+    xTaskCreatePinnedToCore(&store_new_designs, "Store new designs", 2048, NULL, 1, NULL, 1);
 
-    // Write on NVS
-    //nvs_write(DEFAULT_DESIGN_ONE);
-    nvs_write(designs_dic[0].value);
-
-    // Read the written value in NVS
-    nvs_read();
-
-    // Create the task to display the dictioanry designs
-    xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, 1, 1, NULL, 1);
-
-
-    // Print the design on the matrix led
-    //draw_led_matrix(design_one);
 }

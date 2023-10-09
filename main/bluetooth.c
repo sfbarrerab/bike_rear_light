@@ -42,7 +42,7 @@ static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_g
     led_design_bffr_index += 1;
 
     if(led_design_bffr_index == 8){
-        designs_dic[0].value = uint8_array_to_uint64(led_design_int_bffr);
+        current_designs_dic[0].value = uint8_array_to_uint64(led_design_int_bffr);
         led_design_bffr_index = 0;
     }
 
