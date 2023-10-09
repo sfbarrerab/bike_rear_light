@@ -88,8 +88,10 @@ void draw_led_matrix(uint64_t data){
 }
 
 void display_designs_task(){
+    int i = 0;
     while(1){
-        draw_led_matrix(designs_dic[0].value);
+        draw_led_matrix(designs_dic[i].value);
+        i = (i+1)%(NUMBER_OF_DESIGNS+1);
         vTaskDelay(5000/portTICK_PERIOD_MS);
     }
 }
