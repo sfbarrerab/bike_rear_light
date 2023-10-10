@@ -9,6 +9,7 @@
 #include "nvs_wr.h"
 #include "led_matrix.h"
 #include "design_storage.h"
+#include "deep_sleep.h"
 
 void app_main()
 {
@@ -34,5 +35,7 @@ void app_main()
     xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, NULL, 1, NULL, 1);
     // Task to store the values when changed
     xTaskCreatePinnedToCore(&store_new_designs, "Store new designs", 2048, NULL, 1, NULL, 1);
+    // Deep sleep task
+    xTaskCreatePinnedToCore(&deep_sleep_task, "deep sleep task", 2048, NULL, 6, NULL,1);
 
 }
