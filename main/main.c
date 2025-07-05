@@ -32,10 +32,10 @@ void app_main()
     nimble_port_freertos_init(host_task);     
 
     // Task to display the dictionary designs
-    xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, NULL, 1, NULL, 1);
+    xTaskCreatePinnedToCore(&display_designs_task, "Display in LED matrix", 2048, NULL, 1, NULL, 0);
     // Task to store the values when changed
-    xTaskCreatePinnedToCore(&store_new_designs, "Store new designs", 2048, NULL, 1, NULL, 1);
+    xTaskCreatePinnedToCore(&store_new_designs, "Store new designs", 2048, NULL, 1, NULL, 0);
     // Deep sleep task
-    xTaskCreatePinnedToCore(&deep_sleep_task, "deep sleep task", 2048, NULL, 6, NULL,1);
+    xTaskCreatePinnedToCore(&deep_sleep_task, "deep sleep task", 2048, NULL, 6, NULL, 0);
 
 }
